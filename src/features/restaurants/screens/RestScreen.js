@@ -10,27 +10,33 @@ import {
 } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import RestInfoCard from '../components/RestInfoCard';
+import { SIZES, COLORS, FONTS, SHADOWS } from '../../../constants';
+
+const isAndroid = Platform.OS === 'android';
 
 const RestScreen = () => {
   const restaurant = {
     name: 'Kebab House',
     address: '123 Main St',
-    photos: ['https://picsum.photos/200/300?grayscale'],
-    rating: 4.5,
-    icon: 'https://picsum.photos/200/300?grayscale',
-    openingHours: true,
-    isClosedTemporarily: false,
+    photos: ['https://picsum.photos/400/200?grayscale'],
+    rating: 3.5,
+    icon: 'https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png',
+    isOpenNow: true,
+    isClosedTemporarily: true,
   };
+
   return (
-    <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
+    <SafeAreaView
+      style={{ flex: 1, marginTop: isAndroid ? StatusBar.currentHeight : 0 }}
+    >
       <View style={styles.search}>
         <Searchbar placeholder='Search' />
       </View>
       <View
         style={{
           flex: 1,
-          backgroundColor: 'blue',
-          padding: 8,
+          backgroundColor: COLORS.brand.primary,
+          padding: SIZES.base,
         }}
       >
         <RestInfoCard restaurant={restaurant} />
@@ -40,15 +46,9 @@ const RestScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   search: {
-    backgroundColor: '#D3D9DC',
-    padding: 12,
+    backgroundColor: COLORS.ui.secondary,
+    padding: SIZES.small,
   },
 });
 
