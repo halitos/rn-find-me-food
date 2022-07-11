@@ -9,9 +9,18 @@ import {
   StatusBar,
 } from 'react-native';
 import { Searchbar } from 'react-native-paper';
-import RestInfo from '../components/RestInfo';
+import RestInfoCard from '../components/RestInfoCard';
 
 const RestScreen = () => {
+  const restaurant = {
+    name: 'Kebab House',
+    address: '123 Main St',
+    photos: ['https://picsum.photos/200/300?grayscale'],
+    rating: 4.5,
+    icon: 'https://picsum.photos/200/300?grayscale',
+    openingHours: true,
+    isClosedTemporarily: false,
+  };
   return (
     <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
       <View style={styles.search}>
@@ -24,7 +33,7 @@ const RestScreen = () => {
           padding: 8,
         }}
       >
-        <RestInfo />
+        <RestInfoCard restaurant={restaurant} />
       </View>
     </SafeAreaView>
   );
