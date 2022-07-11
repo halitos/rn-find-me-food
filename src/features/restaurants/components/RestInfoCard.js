@@ -23,7 +23,7 @@ const RestInfo = ({ restaurant }) => {
   );
 
   return (
-    <View>
+    <View style={{ marginBottom: SIZES.small }}>
       <Card elevation={5}>
         <Card.Cover
           style={{ padding: SIZES.base }}
@@ -63,25 +63,33 @@ const RestInfo = ({ restaurant }) => {
                   variant='caption'
                   style={{
                     color: COLORS.ui.error,
+                    marginLeft: SIZES.extraLarge,
                   }}
                 >
                   CLOSED TEMPORARILY
                 </Text>
               </View>
             )}
-
-            {isOpenNow && (
-              <SvgXml xml={open} width={SIZES.large} height={SIZES.large} />
-            )}
-            <Image
-              source={{
-                uri: 'https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png',
-              }}
-              style={{
-                width: SIZES.large,
-                height: SIZES.large,
-              }}
-            />
+            <View style={{ flexDirection: 'row' }}>
+              {isOpenNow && (
+                <SvgXml
+                  xml={open}
+                  width={SIZES.large}
+                  height={SIZES.large}
+                  style={{ marginRight: SIZES.small }}
+                />
+              )}
+              <Image
+                source={{
+                  uri: 'https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png',
+                }}
+                style={{
+                  width: SIZES.large,
+                  height: SIZES.large,
+                  marginRight: SIZES.base,
+                }}
+              />
+            </View>
           </View>
           <Text
             style={{

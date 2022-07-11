@@ -7,6 +7,7 @@ import {
   View,
   Platform,
   StatusBar,
+  FlatList,
 } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import RestInfoCard from '../components/RestInfoCard';
@@ -27,20 +28,22 @@ const RestScreen = () => {
 
   return (
     <SafeAreaView
-      style={{ flex: 1, marginTop: isAndroid ? StatusBar.currentHeight : 0 }}
+      style={{
+        flex: 1,
+        marginTop: isAndroid ? StatusBar.currentHeight : 0,
+        backgroundColor: COLORS.brand.primary,
+      }}
     >
       <View style={styles.search}>
         <Searchbar placeholder='Search' />
       </View>
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: COLORS.brand.primary,
-          padding: SIZES.base,
-        }}
-      >
-        <RestInfoCard restaurant={restaurant} />
-      </View>
+      <FlatList
+        data={[{ name: 1 }, { name: 2 }, { name: 3 }, { name: 4 }, { name: 5 }]}
+        r
+        renderItem={(item) => <RestInfoCard restaurant={restaurant} />}
+        keyExtractor={(item) => item.name}
+        contentContainerStyle={styles.list}
+      />
     </SafeAreaView>
   );
 };
@@ -49,6 +52,9 @@ const styles = StyleSheet.create({
   search: {
     backgroundColor: COLORS.ui.secondary,
     padding: SIZES.small,
+  },
+  list: {
+    padding: SIZES.font,
   },
 });
 
