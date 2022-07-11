@@ -1,12 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
+import { StyleSheet, Platform } from 'react-native';
+import RestScreen from './src/features/restaurants/screens/RestScreen';
 
 export default function App() {
+  const isAndroid = Platform.OS === 'android';
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <ExpoStatusBar style='auto' />
+      <RestScreen />
+    </>
   );
 }
 
@@ -16,5 +18,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  search: {
+    backgroundColor: '#D3D9DC',
+    padding: 12,
   },
 });
