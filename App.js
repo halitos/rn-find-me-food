@@ -7,7 +7,8 @@ import { Ionicons } from '@expo/vector-icons';
 import RestScreen from './src/features/restaurants/screens/RestScreen';
 import Map from './src/features/restaurants/screens/Map';
 import Settings from './src/features/restaurants/screens/Settings';
-import { COLORS, SIZES } from './src/constants';
+import { RestaurantContextProvider } from './src/services/restaurants/restaurant.context';
+
 import {
   useFonts as useOswaldFont,
   Oswald_400Regular,
@@ -23,8 +24,29 @@ import {
 
 const Tab = createBottomTabNavigator();
 
+const TabIcons = {
+  Restaurants: 'restaurant',
+  Map: 'map',
+  Settings: 'settings',
+};
+
+// *** More functional approach - function returning function ***
+// const tabBarIcon =
+//   (iconName) =>
+//   ({ size, color }) => {
+//     return <Ionicons name={iconName} size={size} color={color} />;
+//   };
+
+const setScreenOptions = ({ route }) => {
+  const iconName = TabIcons[route.name];
+  return {
+    tabBarIcon: ({ size, color }) => (
+      <Ionicons name={iconName} size={size} color={color} />
+    ),
+  };
+};
+
 export default function App() {
-  const isAndroid = Platform.OS === 'android';
   const [OswaldFontLoaded] = useOswaldFont({
     Oswald_400Regular,
     Oswald_600SemiBold,
@@ -36,45 +58,43 @@ export default function App() {
     Lato_700Bold,
   });
   if (!OswaldFontLoaded || !LatoFontLoaded) {
-    return <Text style={{ padding: 50 }}>LOADING</Text>;
+    return <Text style={{ padding: 50 }}>FONTS LOADING...</Text>;
   }
   return (
     <>
       <ExpoStatusBar style='auto' />
-      <NavigationContainer>
-        <Tab.Navigator
-          initialRouteName='RestScreen'
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused, color, size }) => {
-              let iconName;
-              if (route.name === 'Restaurants') {
-                iconName = 'restaurant';
-              } else if (route.name === 'Map') {
-                iconName = 'map';
-              } else if (route.name === 'Settings') {
-                iconName = 'settings';
-              }
-              return <Ionicons name={iconName} size={size} color={color} />;
-            },
-          })}
-          tabBarOptions={{
-            activeTintColor: 'tomato',
-            inactiveTintColor: 'gray',
-            // style: {
-            //   backgroundColor: COLORS.ui.secondary,
-            //   borderTopColor: COLORS.ui.secondary,
-            //   borderTopWidth: 1,
-            //   height: isAndroid
-            //     ? SIZES.tabBarHeight
-            //     : SIZES.tabBarHeight + StatusBar.currentHeight,
-            // },
-          }}
-        >
-          <Tab.Screen name='Restaurants' component={RestScreen} />
-          <Tab.Screen name='Map' component={Map} />
-          <Tab.Screen name='Settings' component={Settings} />
-        </Tab.Navigator>
-      </NavigationContainer>
+      <RestaurantContextProvider>
+        <NavigationContainer>
+          <Tab.Navigator
+            initialRouteName='RestScreen'
+            screenOptions={setScreenOptions}
+            // ****** Claimed to be Simplified ??? ******
+            // screenOptions={({ route }) => ({
+            //   tabBarIcon: ({ color, size }) => {
+            //     let iconName;
+            //     if (route.name === 'Restaurants') {
+            //       iconName = 'restaurant';
+            //     } else if (route.name === 'Map') {
+            //       iconName = 'map';
+            //     } else if (route.name === 'Settings') {
+            //       iconName = 'settings';
+            //     }
+            //     return <Ionicons name={iconName} size={size} color={color} />;
+            //   },
+            // })}
+            tabBarOptions={{
+              activeTintColor: 'tomato',
+              inactiveTintColor: 'gray',
+              // Can Add style here
+              // style: {},
+            }}
+          >
+            <Tab.Screen name='Restaurants' component={RestScreen} />
+            <Tab.Screen name='Map' component={Map} />
+            <Tab.Screen name='Settings' component={Settings} />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </RestaurantContextProvider>
     </>
   );
 }

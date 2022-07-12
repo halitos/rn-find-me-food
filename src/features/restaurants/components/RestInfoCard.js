@@ -9,7 +9,7 @@ import open from '../../../../assets/open';
 const RestInfo = ({ restaurant }) => {
   const {
     name,
-    address,
+    vicinity,
     photos,
     rating,
     icon,
@@ -17,10 +17,7 @@ const RestInfo = ({ restaurant }) => {
     isClosedTemporarily,
   } = restaurant;
 
-  const ratingArray = Array.from(
-    new Array(Math.ceil(restaurant.rating)),
-    (x, i) => i + 1
-  );
+  const ratingArray = Array.from(new Array(Math.ceil(rating)), (x, i) => i + 1);
 
   return (
     <View style={{ marginBottom: SIZES.small }}>
@@ -29,7 +26,7 @@ const RestInfo = ({ restaurant }) => {
           style={{ padding: SIZES.base }}
           source={{ uri: photos[0] }}
         />
-        {/* <Card.Title title={name} subtitle={`Address: ${address}`} /> */}
+        {/* <Card.Title title={name} subtitle={`Address: ${vicinity}`} /> */}
         <View style={{ padding: SIZES.font }}>
           <Text
             style={{
@@ -97,7 +94,7 @@ const RestInfo = ({ restaurant }) => {
               fontFamily: FONTS.bodyLight,
             }}
           >
-            Address: {address}
+            Address: {vicinity}
           </Text>
         </View>
       </Card>
