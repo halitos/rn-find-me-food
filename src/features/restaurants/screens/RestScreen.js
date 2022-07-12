@@ -9,7 +9,7 @@ import {
   FlatList,
   Text,
 } from 'react-native';
-import { Searchbar } from 'react-native-paper';
+import { Searchbar, ActivityIndicator } from 'react-native-paper';
 import RestInfoCard from '../components/RestInfoCard';
 import { SIZES, COLORS, FONTS, SHADOWS } from '../../../constants';
 import { RestaurantContext } from '../../../services/restaurants/restaurant.context';
@@ -25,30 +25,40 @@ const RestScreen = () => {
       style={{
         flex: 1,
         marginTop: isAndroid ? StatusBar.currentHeight : 0,
-        backgroundColor: COLORS.brand.primary,
+        backgroundColor: COLORS.brand.secondary,
       }}
     >
       <View style={styles.search}>
         <Searchbar placeholder='Search' />
       </View>
-      {isLoading ? (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'lime',
-          }}
-        >
-          <Text>DATA LOADING....</Text>
-        </View>
-      ) : (
+      {!isLoading && !error && (
         <FlatList
           data={restaurants}
           renderItem={(item) => <RestInfoCard restaurant={item.item} />}
           keyExtractor={(item) => item.name}
           contentContainerStyle={styles.list}
         />
+      )}
+      {isLoading && !error && (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: COLORS.brand.secondary,
+          }}
+        >
+          <Text
+            style={{ color: 'white', fontSize: SIZES.large, marginBottom: 8 }}
+          >
+            DATA LOADING....
+          </Text>
+          <ActivityIndicator
+            size='large'
+            animating={true}
+            color={COLORS.ui.error}
+          />
+        </View>
       )}
     </SafeAreaView>
   );

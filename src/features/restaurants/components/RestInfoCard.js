@@ -78,7 +78,9 @@ const RestInfo = ({ restaurant }) => {
               )}
               <Image
                 source={{
-                  uri: 'https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png',
+                  uri:
+                    icon ||
+                    'https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png',
                 }}
                 style={{
                   width: SIZES.large,

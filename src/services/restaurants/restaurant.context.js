@@ -13,8 +13,10 @@ export const RestaurantContextProvider = ({ children }) => {
     const fetchData = async () => {
       try {
         const data = await getRestaurantsData();
-        setRestaurants(data);
-        setIsLoading(false);
+        setInterval(() => {
+          setRestaurants(data);
+          setIsLoading(false);
+        }, 1000);
       } catch (err) {
         setError(err);
         setIsLoading(false);
