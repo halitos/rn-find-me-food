@@ -1,6 +1,5 @@
 import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
 import { Text } from 'react-native';
-import { Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -8,7 +7,7 @@ import RestScreen from './src/features/restaurants/screens/RestScreen';
 import Map from './src/features/restaurants/screens/Map';
 import Settings from './src/features/restaurants/screens/Settings';
 import { RestaurantContextProvider } from './src/services/restaurants/restaurant.context';
-
+import LocationContextProvider from './src/services/location/LocationContext';
 import {
   useFonts as useOswaldFont,
   Oswald_400Regular,
@@ -63,38 +62,41 @@ export default function App() {
   return (
     <>
       <ExpoStatusBar style='auto' />
-      <RestaurantContextProvider>
-        <NavigationContainer>
-          <Tab.Navigator
-            initialRouteName='RestScreen'
-            screenOptions={setScreenOptions}
-            // ****** Claimed to be Simplified ??? ******
-            // screenOptions={({ route }) => ({
-            //   tabBarIcon: ({ color, size }) => {
-            //     let iconName;
-            //     if (route.name === 'Restaurants') {
-            //       iconName = 'restaurant';
-            //     } else if (route.name === 'Map') {
-            //       iconName = 'map';
-            //     } else if (route.name === 'Settings') {
-            //       iconName = 'settings';
-            //     }
-            //     return <Ionicons name={iconName} size={size} color={color} />;
-            //   },
-            // })}
-            tabBarOptions={{
-              activeTintColor: 'tomato',
-              inactiveTintColor: 'gray',
-              // Can Add style here
-              // style: {},
-            }}
-          >
-            <Tab.Screen name='Restaurants' component={RestScreen} />
-            <Tab.Screen name='Map' component={Map} />
-            <Tab.Screen name='Settings' component={Settings} />
-          </Tab.Navigator>
-        </NavigationContainer>
-      </RestaurantContextProvider>
+
+      <LocationContextProvider>
+        <RestaurantContextProvider>
+          <NavigationContainer>
+            <Tab.Navigator
+              initialRouteName='RestScreen'
+              screenOptions={setScreenOptions}
+              // ****** Claimed to be Simplified ??? ******
+              // screenOptions={({ route }) => ({
+              //   tabBarIcon: ({ color, size }) => {
+              //     let iconName;
+              //     if (route.name === 'Restaurants') {
+              //       iconName = 'restaurant';
+              //     } else if (route.name === 'Map') {
+              //       iconName = 'map';
+              //     } else if (route.name === 'Settings') {
+              //       iconName = 'settings';
+              //     }
+              //     return <Ionicons name={iconName} size={size} color={color} />;
+              //   },
+              // })}
+              tabBarOptions={{
+                activeTintColor: 'tomato',
+                inactiveTintColor: 'gray',
+                // Can Add style here
+                // style: {},
+              }}
+            >
+              <Tab.Screen name='Restaurants' component={RestScreen} />
+              <Tab.Screen name='Map' component={Map} />
+              <Tab.Screen name='Settings' component={Settings} />
+            </Tab.Navigator>
+          </NavigationContainer>
+        </RestaurantContextProvider>
+      </LocationContextProvider>
     </>
   );
 }

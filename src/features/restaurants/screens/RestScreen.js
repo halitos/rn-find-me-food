@@ -9,10 +9,11 @@ import {
   FlatList,
   Text,
 } from 'react-native';
-import { Searchbar, ActivityIndicator } from 'react-native-paper';
+import { ActivityIndicator } from 'react-native-paper';
 import RestInfoCard from '../components/RestInfoCard';
 import { SIZES, COLORS, FONTS, SHADOWS } from '../../../constants';
 import { RestaurantContext } from '../../../services/restaurants/restaurant.context';
+import Search from '../components/Search';
 
 const isAndroid = Platform.OS === 'android';
 
@@ -28,13 +29,11 @@ const RestScreen = () => {
         backgroundColor: COLORS.brand.secondary,
       }}
     >
-      <View style={styles.search}>
-        <Searchbar placeholder='Search' />
-      </View>
+      <Search />
       {!isLoading && !error && (
         <FlatList
           data={restaurants}
-          renderItem={(item) => <RestInfoCard restaurant={item.item} />}
+          renderItem={({ item }) => <RestInfoCard restaurant={item} />}
           keyExtractor={(item) => item.name}
           contentContainerStyle={styles.list}
         />

@@ -1,8 +1,6 @@
 import { mockImages, mocks } from './mock';
 
-export const getRestaurantsData = async (
-  location = '37.7749295,-122.4194155'
-) => {
+export const getRestaurantsData = async (location) => {
   try {
     const mockData = await mocks[location];
     if (!mockData) {
