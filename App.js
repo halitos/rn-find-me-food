@@ -69,25 +69,9 @@ export default function App() {
             <Tab.Navigator
               initialRouteName='RestScreen'
               screenOptions={setScreenOptions}
-              // ****** Claimed to be Simplified ??? ******
-              // screenOptions={({ route }) => ({
-              //   tabBarIcon: ({ color, size }) => {
-              //     let iconName;
-              //     if (route.name === 'Restaurants') {
-              //       iconName = 'restaurant';
-              //     } else if (route.name === 'Map') {
-              //       iconName = 'map';
-              //     } else if (route.name === 'Settings') {
-              //       iconName = 'settings';
-              //     }
-              //     return <Ionicons name={iconName} size={size} color={color} />;
-              //   },
-              // })}
               tabBarOptions={{
                 activeTintColor: 'tomato',
                 inactiveTintColor: 'gray',
-                // Can Add style here
-                // style: {},
               }}
             >
               <Tab.Screen name='Restaurants' component={RestScreen} />
