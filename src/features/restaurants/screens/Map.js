@@ -1,6 +1,5 @@
 import { View, Text } from 'react-native';
 import React from 'react';
-import SafeAreaWrapper from '../../../components/utility/SafeAreaWrapper';
 
 const Map = () => {
   return (
