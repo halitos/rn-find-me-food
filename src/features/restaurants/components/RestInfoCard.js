@@ -6,7 +6,7 @@ import { SIZES, COLORS, FONTS, SHADOWS, FONTSIZES } from '../../../constants';
 import star from '../../../../assets/star';
 import open from '../../../../assets/open';
 
-const RestInfo = ({ restaurant }) => {
+const RestInfo = ({ restaurant, pressed }) => {
   const {
     name,
     vicinity,
@@ -20,7 +20,12 @@ const RestInfo = ({ restaurant }) => {
   const ratingArray = Array.from(new Array(Math.ceil(rating)), (x, i) => i + 1);
 
   return (
-    <View style={{ marginBottom: SIZES.small }}>
+    <View
+      style={{
+        marginBottom: SIZES.small,
+        opacity: pressed ? 0.5 : 1,
+      }}
+    >
       <Card elevation={5}>
         <Card.Cover
           style={{ padding: SIZES.base }}

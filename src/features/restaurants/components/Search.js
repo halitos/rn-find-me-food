@@ -9,10 +9,6 @@ const Search = () => {
   const { search, keyword } = locationContext;
   const [searchKeyword, setSearchKeyword] = useState(keyword);
 
-  useEffect(() => {
-    setSearchKeyword(keyword);
-  }, []);
-
   return (
     <View style={styles.search}>
       <Searchbar

@@ -8,6 +8,7 @@ import {
   StatusBar,
   FlatList,
   Text,
+  Pressable,
 } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 import RestInfoCard from '../components/RestInfoCard';
@@ -17,7 +18,7 @@ import Search from '../components/Search';
 
 const isAndroid = Platform.OS === 'android';
 
-const RestScreen = () => {
+const RestScreen = ({ navigation }) => {
   const restaurantContext = useContext(RestaurantContext);
   const { restaurants, isLoading, error } = restaurantContext;
 
@@ -33,7 +34,17 @@ const RestScreen = () => {
       {!isLoading && !error && (
         <FlatList
           data={restaurants}
-          renderItem={({ item }) => <RestInfoCard restaurant={item} />}
+          renderItem={({ item }) => (
+            <Pressable
+              onPress={() =>
+                navigation.navigate('RestaurantDetail', { restaurant: item })
+              }
+            >
+              {({ pressed }) => (
+                <RestInfoCard restaurant={item} pressed={pressed} />
+              )}
+            </Pressable>
+          )}
           keyExtractor={(item) => item.name}
           contentContainerStyle={styles.list}
         />
