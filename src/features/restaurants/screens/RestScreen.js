@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
 import {
   SafeAreaView,
   StyleSheet,
@@ -12,7 +11,7 @@ import {
 } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 import RestInfoCard from '../components/RestInfoCard';
-import { SIZES, COLORS, FONTS, SHADOWS } from '../../../constants';
+import { SIZES, COLORS } from '../../../constants';
 import { RestaurantContext } from '../../../services/restaurants/restaurant.context';
 import Search from '../components/Search';
 
