@@ -18,10 +18,13 @@ const transformLocationData = (searchResults) => {
   const {
     geometry: {
       location: { lat, lng },
+      viewport: { northeast, southwest },
     },
   } = result;
   return {
     lat,
     lng,
+    northeast,
+    southwest,
   };
 };

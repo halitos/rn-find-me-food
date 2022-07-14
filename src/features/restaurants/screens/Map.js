@@ -1,12 +1,57 @@
-import { View, Text } from 'react-native';
-import React from 'react';
+import { View, StyleSheet, Dimensions } from 'react-native';
+import MapView from 'react-native-maps';
+import React, { useContext } from 'react';
+import MapSearch from '../../map/components/MapSearch';
+import { LocationContext } from '../../../services/location/LocationContext';
+import { RestaurantContext } from '../../../services/restaurants/restaurant.context';
 
 const Map = () => {
+  const { location } = useContext(LocationContext);
+  const { restaurants = [] } = useContext(RestaurantContext);
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Map</Text>
+    <View>
+      <MapSearch />
+      <MapView
+        style={styles.map}
+        region={{
+          latitude: location.lat,
+          longitude: location.lng,
+          latitudeDelta: location.northeast.lat - location.southwest.lat,
+          longitudeDelta: location.northeast.lng - location.southwest.lng,
+        }}
+      >
+        {restaurants.map((restaurant) => (
+          <MapView.Marker
+            key={restaurant.name}
+            title={restaurant.name}
+            description={restaurant.vicinity}
+            coordinate={{
+              latitude: restaurant.geometry.location.lat,
+              longitude: restaurant.geometry.location.lng,
+            }}
+          />
+        ))}
+      </MapView>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  map: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  },
+  search: {
+    position: 'absolute',
+    top: 20,
+    zIndex: 10,
+  },
+});
 
 export default Map;

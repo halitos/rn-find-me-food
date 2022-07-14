@@ -4,7 +4,7 @@ import { Searchbar } from 'react-native-paper';
 import { COLORS, SIZES } from '../../../constants';
 import { LocationContext } from '../../../services/location/LocationContext';
 
-const Search = () => {
+const MapSearch = () => {
   const locationContext = useContext(LocationContext);
   const { search, keyword } = locationContext;
   const [searchKeyword, setSearchKeyword] = useState(keyword);
@@ -17,6 +17,7 @@ const Search = () => {
     <View style={styles.search}>
       <Searchbar
         placeholder='Search for a location'
+        icon='map'
         value={searchKeyword}
         onSubmitEditing={() => {
           search(searchKeyword);
@@ -31,9 +32,12 @@ const Search = () => {
 
 const styles = StyleSheet.create({
   search: {
-    backgroundColor: COLORS.ui.secondary,
     padding: SIZES.small,
+    position: 'absolute',
+    top: 24,
+    zIndex: 10,
+    width: '100%',
   },
 });
 
-export default Search;
+export default MapSearch;
