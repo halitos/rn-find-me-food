@@ -27,7 +27,6 @@ const LocationContextProvider = ({ children }) => {
       if (searchKeyword.length > 0) {
         const res = await getLocationData(searchKeyword.toLowerCase());
         setLocation(res);
-        console.log(res);
         setIsLoading(false);
       }
     } catch (err) {

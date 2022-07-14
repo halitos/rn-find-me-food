@@ -1,16 +1,20 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {
+  createStackNavigator,
+  // TransitionPreset,
+} from '@react-navigation/stack';
 import RestaurantScreen from '../../features/restaurants/screens/RestScreen';
 import { Text } from 'react-native';
-// const Stack = createNativeStackNavigator();
+import RestaurantDetail from '../../features/restaurants/screens/RestaurantDetail';
+const Stack = createStackNavigator();
 
 const RestaurantNavigator = () => {
-  return <Text>meh</Text>;
-  // return (
-  // <Stack.Navigator>
-  //   <Stack.Screen name='Restaurant' component={RestaurantScreen} />
-  // </Stack.Navigator>
-  // )
+  return (
+    <Stack.Navigator headerMode='none' initialRouteName='RestaurantScreen'>
+      <Stack.Screen name='Restaurant' component={RestaurantScreen} />
+      <Stack.Screen name='RestaurantDetail' component={RestaurantDetail} />
+    </Stack.Navigator>
+  );
 };
 
 export default RestaurantNavigator;
