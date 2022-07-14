@@ -1,5 +1,5 @@
 import { View, StyleSheet } from 'react-native';
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { Searchbar } from 'react-native-paper';
 import { COLORS, SIZES } from '../../../constants';
 import { LocationContext } from '../../../services/location/LocationContext';

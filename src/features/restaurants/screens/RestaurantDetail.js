@@ -1,7 +1,7 @@
 import RestInfoCard from '../components/RestInfoCard';
 import React, { useState } from 'react';
 import { List } from 'react-native-paper';
-import { SafeAreaView, View, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import SafeAreaWrapper from '../../../components/utility/SafeAreaWrapper';
 
 const RestaurantDetail = ({ route }) => {

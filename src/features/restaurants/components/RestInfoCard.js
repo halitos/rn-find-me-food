@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { Card } from 'react-native-paper';
 import { SvgXml } from 'react-native-svg';
-import { SIZES, COLORS, FONTS, SHADOWS, FONTSIZES } from '../../../constants';
+import { SIZES, COLORS, FONTS, FONTSIZES } from '../../../constants';
 import star from '../../../../assets/star';
 import open from '../../../../assets/open';
 
@@ -31,7 +31,6 @@ const RestInfo = ({ restaurant, pressed }) => {
           style={{ padding: SIZES.base }}
           source={{ uri: photos[0] }}
         />
-        {/* <Card.Title title={name} subtitle={`Address: ${vicinity}`} /> */}
         <View style={{ padding: SIZES.font }}>
           <Text
             style={{
