@@ -5,6 +5,7 @@ import { SvgXml } from 'react-native-svg';
 import { SIZES, COLORS, FONTS, FONTSIZES } from '../../../constants';
 import star from '../../../../assets/star';
 import open from '../../../../assets/open';
+import FavouriteButton from '../../../components/favourites/FavouriteButton';
 
 const RestInfo = ({ restaurant, pressed }) => {
   const {
@@ -27,6 +28,7 @@ const RestInfo = ({ restaurant, pressed }) => {
       }}
     >
       <Card elevation={5}>
+        <FavouriteButton restaurant={restaurant} />
         <Card.Cover
           style={{ padding: SIZES.base }}
           source={{ uri: photos[0] }}

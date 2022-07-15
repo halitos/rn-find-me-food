@@ -15,6 +15,7 @@ import {
   Lato_700Bold,
 } from '@expo-google-fonts/lato';
 import { Navigation } from './src/infrastracture/navigation';
+import FavouritesContextProvider from './src/services/favourites/FavouritesContext';
 
 export default function App() {
   const [OswaldFontLoaded] = useOswaldFont({
@@ -33,11 +34,13 @@ export default function App() {
   return (
     <>
       <ExpoStatusBar style='auto' />
-      <LocationContextProvider>
-        <RestaurantContextProvider>
-          <Navigation />
-        </RestaurantContextProvider>
-      </LocationContextProvider>
+      <FavouritesContextProvider>
+        <LocationContextProvider>
+          <RestaurantContextProvider>
+            <Navigation />
+          </RestaurantContextProvider>
+        </LocationContextProvider>
+      </FavouritesContextProvider>
     </>
   );
 }

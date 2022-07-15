@@ -4,8 +4,9 @@ import React, { useContext } from 'react';
 import MapSearch from '../../map/components/MapSearch';
 import { LocationContext } from '../../../services/location/LocationContext';
 import { RestaurantContext } from '../../../services/restaurants/restaurant.context';
+import MapCallout from '../../map/components/MapCallout';
 
-const Map = () => {
+const Map = ({ navigation }) => {
   const { location } = useContext(LocationContext);
   const { restaurants = [] } = useContext(RestaurantContext);
   return (
@@ -14,8 +15,8 @@ const Map = () => {
       <MapView
         style={styles.map}
         region={{
-          latitude: location.lat,
-          longitude: location.lng,
+          latitude: location?.lat,
+          longitude: location?.lng,
           latitudeDelta: location.northeast.lat - location.southwest.lat,
           longitudeDelta: location.northeast.lng - location.southwest.lng,
         }}
@@ -29,7 +30,15 @@ const Map = () => {
               latitude: restaurant.geometry.location.lat,
               longitude: restaurant.geometry.location.lng,
             }}
-          />
+          >
+            <MapView.Callout
+              onPress={() =>
+                navigation.navigate('RestaurantDetail', { restaurant })
+              }
+            >
+              <MapCallout restaurant={restaurant} />
+            </MapView.Callout>
+          </MapView.Marker>
         ))}
       </MapView>
     </View>
