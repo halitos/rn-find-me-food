@@ -10,11 +10,12 @@ const FavouritesContextProvider = ({ children }) => {
   };
 
   const removeFavourite = (restaurant) => {
-    const newFavourites = setFavourites(
-      favourites.filter((f) => f.place_id !== restaurant.place_id)
-    );
-
-    setFavourites(newFavourites);
+    if (favourites.length > 0) {
+      const newFavourites = favourites.filter(
+        (f) => f.place_id !== restaurant.place_id
+      );
+      setFavourites(newFavourites);
+    }
   };
 
   // const value = useMemo(

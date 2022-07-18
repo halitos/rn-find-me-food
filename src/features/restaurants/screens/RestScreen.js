@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -14,12 +14,17 @@ import RestInfoCard from '../components/RestInfoCard';
 import { SIZES, COLORS } from '../../../constants';
 import { RestaurantContext } from '../../../services/restaurants/restaurant.context';
 import Search from '../components/Search';
+import FavouritesBar from '../../../components/favourites/FavouritesBar';
+import { FavouritesContext } from '../../../services/favourites/FavouritesContext';
 
 const isAndroid = Platform.OS === 'android';
 
 const RestScreen = ({ navigation }) => {
   const restaurantContext = useContext(RestaurantContext);
   const { restaurants, isLoading, error } = restaurantContext;
+  const favouritesContext = useContext(FavouritesContext);
+  const { favourites } = favouritesContext;
+  const [isToggled, setIsToggled] = useState(false);
 
   return (
     <SafeAreaView
@@ -29,7 +34,11 @@ const RestScreen = ({ navigation }) => {
         backgroundColor: COLORS.brand.secondary,
       }}
     >
-      <Search />
+      <Search
+        onFavouritesToggle={() => setIsToggled(!isToggled)}
+        isToggled={isToggled}
+      />
+      {isToggled && <FavouritesBar favourites={favourites} />}
       {!isLoading && !error && (
         <FlatList
           data={restaurants}
