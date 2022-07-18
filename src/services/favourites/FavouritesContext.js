@@ -1,4 +1,5 @@
-import React, { createContext, useState, useMemo } from 'react';
+import React, { createContext, useState, useMemo, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const FavouritesContext = createContext();
 
@@ -17,6 +18,34 @@ const FavouritesContextProvider = ({ children }) => {
       setFavourites(newFavourites);
     }
   };
+
+  const storeFavourites = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem('@favourites', jsonValue);
+    } catch (err) {
+      console.log('Store Fav Error:', err);
+    }
+  };
+
+  const getFavourites = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@favourites');
+      if (value) {
+        setFavourites(JSON.parse(value));
+      }
+    } catch (err) {
+      console.log('Get Fav Error', err);
+    }
+  };
+
+  useEffect(() => {
+    getFavourites();
+  }, []);
+
+  useEffect(() => {
+    storeFavourites(favourites);
+  }, [favourites]);
 
   // const value = useMemo(
   //   () => ({ favourites, addFavourite, removeFavourite }),
