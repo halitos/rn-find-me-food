@@ -26,6 +26,10 @@ const RestScreen = ({ navigation }) => {
   const { favourites } = favouritesContext;
   const [isToggled, setIsToggled] = useState(false);
 
+  const onDetail = (restaurant) => {
+    navigation.navigate('RestaurantDetail', { restaurant });
+  };
+
   return (
     <SafeAreaView
       style={{
@@ -38,7 +42,9 @@ const RestScreen = ({ navigation }) => {
         onFavouritesToggle={() => setIsToggled(!isToggled)}
         isToggled={isToggled}
       />
-      {isToggled && <FavouritesBar favourites={favourites} />}
+      {isToggled && (
+        <FavouritesBar favourites={favourites} onDetail={onDetail} />
+      )}
       {!isLoading && !error && (
         <FlatList
           data={restaurants}

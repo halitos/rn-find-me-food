@@ -5,7 +5,6 @@ import { COLORS, SIZES } from '../../../constants';
 import { LocationContext } from '../../../services/location/LocationContext';
 
 const Search = ({ isToggled, onFavouritesToggle }) => {
-  console.log('isToggled', isToggled);
   const locationContext = useContext(LocationContext);
   const { search, keyword } = locationContext;
   const [searchKeyword, setSearchKeyword] = useState(keyword);
