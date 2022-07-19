@@ -1,7 +1,9 @@
+import { initializeApp } from 'firebase/app';
 import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
 import { Text } from 'react-native';
 import { RestaurantContextProvider } from './src/services/restaurants/restaurant.context';
 import LocationContextProvider from './src/services/location/LocationContext';
+import { AuthenticationContextProvider } from './src/services/authentication/AuthenticationContext';
 import {
   useFonts as useOswaldFont,
   Oswald_400Regular,
@@ -16,6 +18,19 @@ import {
 } from '@expo-google-fonts/lato';
 import { Navigation } from './src/infrastracture/navigation';
 import FavouritesContextProvider from './src/services/favourites/FavouritesContext';
+
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: 'AIzaSyAgBhU6sGfDhx6aiDeVvS2W-bduKhRhkvQ',
+  authDomain: 'find-me-food-a6d53.firebaseapp.com',
+  projectId: 'find-me-food-a6d53',
+  storageBucket: 'find-me-food-a6d53.appspot.com',
+  messagingSenderId: '144523191153',
+  appId: '1:144523191153:web:4ed609cb1686d10f760cd0',
+};
+
+// Initialize Firebase
+export const firebaseApp = initializeApp(firebaseConfig);
 
 export default function App() {
   const [OswaldFontLoaded] = useOswaldFont({
@@ -34,13 +49,15 @@ export default function App() {
   return (
     <>
       <ExpoStatusBar style='auto' />
-      <FavouritesContextProvider>
-        <LocationContextProvider>
-          <RestaurantContextProvider>
-            <Navigation />
-          </RestaurantContextProvider>
-        </LocationContextProvider>
-      </FavouritesContextProvider>
+      <AuthenticationContextProvider>
+        <FavouritesContextProvider>
+          <LocationContextProvider>
+            <RestaurantContextProvider>
+              <Navigation />
+            </RestaurantContextProvider>
+          </LocationContextProvider>
+        </FavouritesContextProvider>
+      </AuthenticationContextProvider>
     </>
   );
 }
