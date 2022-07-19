@@ -1,13 +1,8 @@
-// import { initializeApp } from 'firebase/app';
-// import {
-//   getAuth,
-//   onAuthStateChanged,
-//   FacebookAuthProvider,
-//   signInWithEmailAndPassword,
-//   createUserWithEmailAndPassword,
-// } from 'firebase/auth';
+import { signInWithEmailAndPassword, getAuth } from 'firebase/auth';
 
-// const loginToFirebase = async (email, password) => {
-//   await auth.signInWithEmailAndPassword(email, password);
-//   setIsAuth(true);
-// };
+export const loginToFirebase = async (email, password) => {
+  const auth = getAuth();
+  await signInWithEmailAndPassword(auth, email, password);
+};
+
+// Not worth using a context here, but it's a good example of how to use a service
