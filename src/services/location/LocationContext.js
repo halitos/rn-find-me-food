@@ -11,8 +11,8 @@ const LocationContextProvider = ({ children }) => {
 
   const onSearch = async (searchKeyword) => {
     try {
-      if (!searchKeyword) {
-        throw new Error('No search keyword provided');
+      if (searchKeyword.length < 3) {
+        throw new Error('Search keyword must be at least 3 characters long');
       }
       setIsLoading(true);
       setKeyword(searchKeyword);
