@@ -1,6 +1,9 @@
 import React, { useState, useEffect, createContext } from 'react';
-import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from 'firebase/auth';
 
 export const AuthenticationContext = createContext();
 
@@ -16,7 +19,6 @@ export const AuthenticationContextProvider = ({ children }) => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log('USER', user);
         setUser(user);
         setIsAuthLoading(false);
       })
@@ -28,22 +30,38 @@ export const AuthenticationContextProvider = ({ children }) => {
       });
   };
 
+  const onRegister = (email, password, confirmPassword) => {
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+    setIsAuthLoading(true);
+    const auth = getAuth();
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log('ERROR', errorCode, errorMessage);
+        setError(errorMessage);
+      });
+  };
+
   return (
     <AuthenticationContext.Provider
-      value={{ isAuthenticated: !!user, user, isAuthLoading, error, onLogin }}
+      value={{
+        isAuthenticated: !!user,
+        user,
+        isAuthLoading,
+        error,
+        onLogin,
+        onRegister,
+      }}
     >
       {children}
     </AuthenticationContext.Provider>
   );
 };
-
-// createUserWithEmailAndPassword(auth, 'email@email.com', 'password1234')
-// .then((userCredentials) => {
-//   const user = userCredentials.user;
-//   console.log('USER', user);
-// })
-// .catch((error) => {
-//   const errorCode = error.code;
-//   const errorMessage = error.message;
-//   console.log('ERROR', errorCode, errorMessage);
-// });
