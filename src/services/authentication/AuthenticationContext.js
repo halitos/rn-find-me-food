@@ -48,6 +48,11 @@ export const AuthenticationContextProvider = ({ children }) => {
       });
   };
 
+  const onLogout = () => {
+    auth.signOut();
+    setUser(null);
+  };
+
   const onRegister = (email, password, confirmPassword) => {
     if (password !== confirmPassword) {
       setError('Passwords do not match');
@@ -79,6 +84,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         error,
         onLogin,
         onRegister,
+        onLogout,
       }}
     >
       {children}
