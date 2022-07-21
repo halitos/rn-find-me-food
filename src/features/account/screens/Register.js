@@ -1,5 +1,10 @@
 import { View, StyleSheet, Text } from 'react-native';
-import { Button, TextInput } from 'react-native-paper';
+import {
+  Button,
+  TextInput,
+  ActivityIndicator,
+  Colors,
+} from 'react-native-paper';
 import React, { useState, useContext } from 'react';
 import { AccountBackground } from '../components/AccountBackground';
 import { AuthenticationContext } from '../../../services/authentication/AuthenticationContext';
@@ -11,7 +16,7 @@ const Register = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const authenticationContext = useContext(AuthenticationContext);
-  const { onRegister, error } = authenticationContext;
+  const { onRegister, error, isAuthLoading } = authenticationContext;
 
   return (
     <AccountBackground>
@@ -51,15 +56,24 @@ const Register = ({ navigation }) => {
             </Text>
           </View>
         )}
-        <Button
-          icon='email'
-          mode='contained'
-          color='blue'
-          onPress={() => onRegister(email, password, confirmPassword)}
-          style={{ marginTop: 20, padding: 4 }}
-        >
-          Register
-        </Button>
+        {!isAuthLoading ? (
+          <Button
+            icon='email'
+            mode='contained'
+            color={COLORS.ui.success}
+            onPress={() => {
+              onRegister(email, password, confirmPassword);
+              setEmail('');
+              setPassword('');
+              setConfirmPassword('');
+            }}
+            style={{ marginTop: 20, padding: 4 }}
+          >
+            Register
+          </Button>
+        ) : (
+          <ActivityIndicator size='large' color={Colors.blue} />
+        )}
       </View>
       <Button
         // icon='back'
@@ -80,11 +94,9 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: 'gray',
-    backgroundColor: 'white',
-    borderRadius: 5,
+    backgroundColor: '#D6DBDF',
+    marginVertical: 8,
     paddingHorizontal: 8,
-    paddingVertical: 0,
-    marginVertical: 12,
   },
   container: {
     justifyContent: 'center',

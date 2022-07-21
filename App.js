@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import React, { useEffect } from 'react';
 import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
 import { Text } from 'react-native';
 import { RestaurantContextProvider } from './src/services/restaurants/restaurant.context';
@@ -18,6 +19,7 @@ import {
 } from '@expo-google-fonts/lato';
 import { Navigation } from './src/infrastracture/navigation';
 import FavouritesContextProvider from './src/services/favourites/FavouritesContext';
+import { getAuth } from 'firebase/auth';
 
 // Firebase configuration
 const firebaseConfig = {
@@ -43,6 +45,20 @@ export default function App() {
     Lato_400Regular,
     Lato_700Bold,
   });
+
+  const checkLogin = async () => {
+    const auth = getAuth();
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        console.log('user is logged');
+      }
+    });
+  };
+
+  useEffect(() => {
+    checkLogin();
+  }, []);
+
   if (!OswaldFontLoaded || !LatoFontLoaded) {
     return <Text style={{ padding: 50 }}>FONTS LOADING...</Text>;
   }

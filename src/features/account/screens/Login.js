@@ -1,5 +1,10 @@
 import { View, StyleSheet, Text } from 'react-native';
-import { Button, TextInput } from 'react-native-paper';
+import {
+  Button,
+  TextInput,
+  ActivityIndicator,
+  Colors,
+} from 'react-native-paper';
 import React, { useState, useContext } from 'react';
 import { AccountBackground } from '../components/AccountBackground';
 import { AuthenticationContext } from '../../../services/authentication/AuthenticationContext';
@@ -10,7 +15,7 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   const authenticationContext = useContext(AuthenticationContext);
-  const { onLogin, error } = authenticationContext;
+  const { onLogin, error, isAuthLoading } = authenticationContext;
 
   return (
     <AccountBackground>
@@ -41,15 +46,23 @@ const Login = ({ navigation }) => {
             </Text>
           </View>
         )}
-        <Button
-          icon='email'
-          mode='contained'
-          color='blue'
-          onPress={() => onLogin(email, password)}
-          style={{ marginTop: 20, padding: 4 }}
-        >
-          Login
-        </Button>
+        {!isAuthLoading ? (
+          <Button
+            icon='lock'
+            mode='contained'
+            color='blue'
+            onPress={() => {
+              onLogin(email, password);
+              setEmail('');
+              setPassword('');
+            }}
+            style={{ marginTop: 20, padding: 4 }}
+          >
+            Login
+          </Button>
+        ) : (
+          <ActivityIndicator size='large' color={Colors.blue} />
+        )}
       </View>
       <Button
         // icon='back'

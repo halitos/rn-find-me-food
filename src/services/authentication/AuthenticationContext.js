@@ -12,9 +12,27 @@ export const AuthenticationContextProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [isAuthLoading, setIsAuthLoading] = useState(false);
 
+  const auth = getAuth();
+
+  const checkLogin = async () => {
+    auth.onAuthStateChanged((usr) => {
+      if (usr) {
+        setUser(usr);
+        console.log(usr.email);
+        setIsAuthLoading(false);
+      } else {
+        setIsAuthLoading(false);
+      }
+    });
+  };
+
+  useEffect(() => {
+    checkLogin();
+  }, []);
+
   const onLogin = (email, password) => {
     setIsAuthLoading(true);
-    const auth = getAuth();
+    // const auth = getAuth();
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -36,11 +54,13 @@ export const AuthenticationContextProvider = ({ children }) => {
       return;
     }
     setIsAuthLoading(true);
-    const auth = getAuth();
+    // const auth = getAuth();
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
+        setUser(user);
+        setIsAuthLoading(false);
       })
       .catch((error) => {
         const errorCode = error.code;
